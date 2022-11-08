@@ -4,99 +4,182 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
+import java.lang.Long.parseLong
+
 
 class MainActivity : AppCompatActivity() {
-    private var num1: Double = 0.0
-    private var num2: Double = 0.0
-    private var operacion: Int = 0
+
+    var datos3: Long = 0
+    var memoriaHex=""
+    var operacionHex=""
+    var datosHex=""
+    var datosHex2=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        b1.setOnClickListener { numeroPresionado(digito = "1") }
-        b2.setOnClickListener { numeroPresionado(digito = "2") }
-        b3.setOnClickListener { numeroPresionado(digito = "3") }
-        b4.setOnClickListener { numeroPresionado(digito = "4") }
-        b5.setOnClickListener { numeroPresionado(digito = "5") }
-        b6.setOnClickListener { numeroPresionado(digito = "6") }
-        b7.setOnClickListener { numeroPresionado(digito = "7") }
-        b8.setOnClickListener { numeroPresionado(digito = "8") }
-        b9.setOnClickListener { numeroPresionado(digito = "9") }
-        b0.setOnClickListener { numeroPresionado(digito = "0") }
-
-        mas.setOnClickListener { operacionPresionada(SUMA) }
-        menos.setOnClickListener { operacionPresionada(RESTA) }
-        por.setOnClickListener { operacionPresionada(MULTIPLICACION) }
-        bdividir.setOnClickListener { operacionPresionada(DIVISION) }
-
-        delete.setOnClickListener {
-            resetear()
-        }
-
-        bigual.setOnClickListener { resolverOperacion() }
-
-
+        hexadecimal()
     }
 
-    private fun numeroPresionado(digito: String) {
-
-        if (resultadoTextView.text == "0" && digito != ".") {
-            resultadoTextView.text = "$digito"
-        } else {
-            resultadoTextView.text = "${resultadoTextView.text}$digito"
+    fun ejecutarHex(hex1:Long, hex2: Long){
+        when (operacionHex){
+            "+" -> datos3=(hex1+hex2)
+            "-" -> datos3=(hex1-hex2)
+            "x" -> datos3=(hex1*hex2)
+            "/" -> datos3=(hex1/hex2)
         }
 
-        if (operacion == NO_OPERACION) {
-            num1 = resultadoTextView.text.toString().toDouble()
-        } else {
-            num2 = resultadoTextView.text.toString().toDouble()
+        var hexString = java.lang.Long.toHexString(datos3)
+        resultadoTextView.text = hexString.toUpperCase()
+        datosHex = resultadoTextView.toString()
+    }
+
+    fun toHex(hex: String): Long {
+        return parseLong(hex,16)
+    }
+
+    fun hexadecimal() {
+        b0.setOnClickListener(){
+            datosHex+="0"
+            resultadoTextView.setText(datosHex)
         }
-    }
+        b1.setOnClickListener(){
+            datosHex+="1"
+            resultadoTextView.setText(datosHex)
+        }
+        b2.setOnClickListener(){
+            datosHex+="2"
+            resultadoTextView.setText(datosHex)
+        }
+        b3.setOnClickListener(){
+            datosHex+="3"
+            resultadoTextView.setText(datosHex)
+        }
+        b4.setOnClickListener(){
+            datosHex+="4"
+            resultadoTextView.setText(datosHex)
+        }
+        b5.setOnClickListener(){
+            datosHex+="5"
+            resultadoTextView.setText(datosHex)
+        }
+        b6.setOnClickListener(){
+            datosHex+="6"
+            resultadoTextView.setText(datosHex)
+        }
+        b7.setOnClickListener(){
+            datosHex+="7"
+            resultadoTextView.setText(datosHex)
+        }
+        b8.setOnClickListener(){
+            datosHex+="8"
+            resultadoTextView.setText(datosHex)
+        }
+        b9.setOnClickListener(){
+            datosHex+="9"
+            resultadoTextView.setText(datosHex)
+        }
+        a.setOnClickListener {
+            datosHex+="A"
+            resultadoTextView.setText(datosHex)
+        }
+        b.setOnClickListener {
+            datosHex+="B"
+            resultadoTextView.setText(datosHex)
+        }
+        c.setOnClickListener {
+            datosHex+="C"
+            resultadoTextView.setText(datosHex)
+        }
+        d.setOnClickListener {
+            datosHex+="D"
+            resultadoTextView.setText(datosHex)
+        }
+        e.setOnClickListener {
+            datosHex+="E"
+            resultadoTextView.setText(datosHex)
+        }
+        f.setOnClickListener {
+            datosHex+="F"
+            resultadoTextView.setText(datosHex)
+        }
+        mas.setOnClickListener(){
+            operacionHex="+"
+            datosHex2=datosHex
+            datosHex=""
+            resultadoTextView.text=datosHex2+"+"
+        }
+        menos.setOnClickListener(){
+            operacionHex="-"
+            datosHex2=datosHex
+            datosHex=""
+            resultadoTextView.text=datosHex2+"-"
+        }
+        por.setOnClickListener(){
+            operacionHex="x"
+            datosHex2=datosHex
+            datosHex=""
+            resultadoTextView.text=datosHex2+"x"
+        }
+        bdividir.setOnClickListener() {
+            operacionHex="/"
+            datosHex2=datosHex
+            datosHex=""
+            resultadoTextView.text=datosHex2+"/"
+        }
 
-    private fun operacionPresionada(operacion: Int) {
-
-        this.operacion = operacion
-        num1 = resultadoTextView.text.toString().toDouble()
-
-        resultadoTextView.text = "0"
-    }
-
-    private fun resolverOperacion() {
-        bigual.setOnClickListener {
-
-            var resultado = when (operacion) {
-                SUMA -> num1 + num2
-                RESTA -> num1 - num2
-                MULTIPLICACION -> num1 * num2
-                DIVISION -> num1 / num2
-
-                else -> 0
+        bigual.setOnClickListener(){
+            if(memoriaHex=="") {
+                memoriaHex = resultadoTextView.text.toString()
+            }else{
+                resultadoTextView.text = memoriaHex
             }
+        }
 
-            num1 = resultado as Double
+        bigual.setOnClickListener(){
+            datosHex2=memoriaHex
+            resultadoTextView.text = datosHex2+"+"
+            operacionHex="+"
+        }
 
-            resultadoTextView.text = if ("$resultado".endsWith(".0")) {
-                "$resultado".replace(".0", "")
+        borrar.setOnClickListener(){
+            if(resultadoTextView.text.toString()==""){
+                datosHex=""
+                resultadoTextView.setText(datosHex)
+            }else {
+                var datBorrHex = resultadoTextView.text
+                val ultHex = datBorrHex.length
+                var newDatHex = datBorrHex.substring(0, ultHex - 1)
+                datosHex = newDatHex
+                resultadoTextView.setText(datosHex)
+            }
+        }
+        delete.setOnClickListener(){
+            datosHex=""
+            datosHex2=""
+            resultadoTextView.setText(datosHex)
+        }
+        bigual.setOnClickListener(){
+            if(datosHex2=="") datosHex2="0"
+            try {
+                ejecutarHex(toHex(datosHex2),toHex(datosHex))
+            }catch (e: ArithmeticException){
+                resultadoTextView.text="Error: No se puede dividir en 0"
+            }
+        }
+
+        bcosa.setOnClickListener() {
+            var num: String = resultadoTextView.text.toString()
+            if (resultadoTextView.text.toString()=="") {
+                resultadoTextView.setText(resultadoTextView.text)
+            }else if(num.contains("-(${resultadoTextView.text})")){
+                resultadoTextView.setText("${resultadoTextView.text}")
             } else {
-                "%.2f".format(resultado)
+                resultadoTextView.setText("-(${resultadoTextView.text})")
             }
-
         }
+
     }
 
-    private fun  resetear(){
-        num1 = 0.0
-        num2 = 0.0
-        resultadoTextView.text = "0"
-        operacion = NO_OPERACION
-    }
 
-    companion object {
-        const val SUMA = 1
-        const val RESTA = 2
-        const val MULTIPLICACION = 3
-        const val DIVISION = 4
-        const val NO_OPERACION = 0
-    }
 }
