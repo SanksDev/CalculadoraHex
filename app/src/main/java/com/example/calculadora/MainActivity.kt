@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun ejecutarHex(hex1:Long, hex2: Long){
+        resultadoTextView.text = ""
         when (operacionHex){
             "+" -> datos3=(hex1+hex2)
             "-" -> datos3=(hex1-hex2)
@@ -104,42 +105,39 @@ class MainActivity : AppCompatActivity() {
             resultadoTextView.setText(datosHex)
         }
         mas.setOnClickListener(){
+            var cont = 0
+            datosHex2 = ""
             operacionHex="+"
             datosHex2=datosHex
             datosHex=""
-            resultadoTextView.text=datosHex2+"+"
+            if (cont == 0) {
+                resultadoTextView.text="+"
+                memoriaHex = datosHex2
+                cont += 1
+            } else {
+                resultadoTextView.text = "+"
+            }
         }
         menos.setOnClickListener(){
+            datosHex2 = ""
             operacionHex="-"
             datosHex2=datosHex
             datosHex=""
             resultadoTextView.text=datosHex2+"-"
         }
         por.setOnClickListener(){
+            datosHex2 = ""
             operacionHex="x"
             datosHex2=datosHex
             datosHex=""
-            resultadoTextView.text=datosHex2+"x"
+            resultadoTextView.text=datosHex2+"*"
         }
         bdividir.setOnClickListener() {
+            datosHex2 = ""
             operacionHex="/"
             datosHex2=datosHex
             datosHex=""
             resultadoTextView.text=datosHex2+"/"
-        }
-
-        bigual.setOnClickListener(){
-            if(memoriaHex=="") {
-                memoriaHex = resultadoTextView.text.toString()
-            }else{
-                resultadoTextView.text = memoriaHex
-            }
-        }
-
-        bigual.setOnClickListener(){
-            datosHex2=memoriaHex
-            resultadoTextView.text = datosHex2+"+"
-            operacionHex="+"
         }
 
         borrar.setOnClickListener(){
@@ -160,7 +158,11 @@ class MainActivity : AppCompatActivity() {
             resultadoTextView.setText(datosHex)
         }
         bigual.setOnClickListener(){
-            if(datosHex2=="") datosHex2="0"
+            if(datosHex2=="")  {
+                datosHex2="0"
+            }else{
+                datosHex2="0"
+            }
             try {
                 ejecutarHex(toHex(datosHex2),toHex(datosHex))
             }catch (e: ArithmeticException){
@@ -169,14 +171,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         bcosa.setOnClickListener() {
-            var num: String = resultadoTextView.text.toString()
-            if (resultadoTextView.text.toString()=="") {
-                resultadoTextView.setText(resultadoTextView.text)
-            }else if(num.contains("-(${resultadoTextView.text})")){
-                resultadoTextView.setText("${resultadoTextView.text}")
-            } else {
-                resultadoTextView.setText("-(${resultadoTextView.text})")
-            }
+            var valor = resultadoTextView.text.toString()
+            var long = java.lang.Long.parseLong(valor, 16)
+            var dato =  long*-1
+            var datoN = java.lang.Long.toHexString(dato).toUpperCase()
+            resultadoTextView.text = datoN
         }
 
     }
