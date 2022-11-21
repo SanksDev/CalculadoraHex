@@ -10,7 +10,6 @@ import java.lang.Long.parseLong
 class MainActivity : AppCompatActivity() {
 
     var datos3: Long = 0
-    var memoriaHex=""
     var operacionHex=""
     var datosHex=""
     var datosHex2=""
@@ -105,39 +104,28 @@ class MainActivity : AppCompatActivity() {
             resultadoTextView.setText(datosHex)
         }
         mas.setOnClickListener(){
-            var cont = 0
-            datosHex2 = ""
             operacionHex="+"
             datosHex2=datosHex
             datosHex=""
-            if (cont == 0) {
-                resultadoTextView.text="+"
-                memoriaHex = datosHex2
-                cont += 1
-            } else {
-                resultadoTextView.text = "+"
-            }
         }
         menos.setOnClickListener(){
             datosHex2 = ""
             operacionHex="-"
             datosHex2=datosHex
             datosHex=""
-            resultadoTextView.text=datosHex2+"-"
         }
         por.setOnClickListener(){
             datosHex2 = ""
             operacionHex="x"
             datosHex2=datosHex
             datosHex=""
-            resultadoTextView.text=datosHex2+"*"
         }
         bdividir.setOnClickListener() {
+
             datosHex2 = ""
             operacionHex="/"
             datosHex2=datosHex
             datosHex=""
-            resultadoTextView.text=datosHex2+"/"
         }
 
         borrar.setOnClickListener(){
@@ -158,24 +146,27 @@ class MainActivity : AppCompatActivity() {
             resultadoTextView.setText(datosHex)
         }
         bigual.setOnClickListener(){
-            if(datosHex2=="")  {
-                datosHex2="0"
-            }else{
-                datosHex2="0"
-            }
-            try {
-                ejecutarHex(toHex(datosHex2),toHex(datosHex))
-            }catch (e: ArithmeticException){
-                resultadoTextView.text="Error: No se puede dividir en 0"
-            }
+                try {
+                  ejecutarHex(toHex(datosHex2),toHex(datosHex))
+                }catch (e: ArithmeticException) {
+                    resultadoTextView.text="No se puede dividir en 0"
+                }catch (e: Exception){
+                    resultadoTextView.text="0"
+                }
+
         }
 
         bcosa.setOnClickListener() {
-            var valor = resultadoTextView.text.toString()
-            var long = java.lang.Long.parseLong(valor, 16)
-            var dato =  long*-1
-            var datoN = java.lang.Long.toHexString(dato).toUpperCase()
-            resultadoTextView.text = datoN
+            try {
+                var valor = resultadoTextView.text.toString()
+                var long = java.lang.Long.parseLong(valor, 16)
+                var dato =  long*-1
+                var datoN = java.lang.Long.toHexString(dato).toUpperCase()
+                resultadoTextView.text = datoN
+            }catch (e: Exception) {
+                resultadoTextView.text="0"
+            }
+
         }
 
     }
